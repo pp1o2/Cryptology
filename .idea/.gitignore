@@ -1,0 +1,4 @@
+# Default ignored riles
+__init__.py
+/workspace.xml
+.idea/
