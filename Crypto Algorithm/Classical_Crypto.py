@@ -1,5 +1,7 @@
 # coding=utf-8
 import os
+from gmpy2 import gcd, invert
+
 
 # -----------------------  shift cipher
 
@@ -8,7 +10,7 @@ def shift_enc(k, m):
         Do shift cipher encryption.
         Calculate ci: ci ≡ mi+k (mod 26)
 
-    :param int k: key of encryption. (0<k<26)
+    :param int k: Key. (0<k<26)
     :param str m: plaintext. All characters should be alphabetic.
     :return str c: ciphertext.
     """
@@ -30,9 +32,9 @@ def shift_dec(k,c):
         Do shift cipher decryption.
         Calculate mi ≡ ci-k (mod 26)
 
-    :param int k: key of decryption. (0<k<26)
-    :param str c: ciphertext. All characters should be alphabetic.
-    :return str m: plaintext.
+    :param int k: Key. (0<k<26)
+    :param str c: Ciphertext. All characters should be alphabetic.
+    :return str m: Plaintext.
     """
 
     assert c.isalpha()
@@ -87,9 +89,60 @@ Just use this website for frequency analysis: https://quipqiup.com/
 It can solve simple substitution ciphers.
 '''
 
-# TODO: Substitution cipher
+# -----------------------  affine cipher
 
-def vigenere_enc(k,m):
+def affine_enc(m, *k):
+    """
+        Do affine cipher encryption.
+        compute ci ≡ ami + b (mod 26)
+    :param str m: Plaintext. It consists of lowercase letter and space,comma ....
+    :param tuple k: Key.  k = (a,b). Note that a and 26 must be coprime
+    :return str c:
+    """
+    a = k[0]
+    b = k[1]
+    assert 0 < a < 26
+    assert 0 <= b < 26
+    assert gcd(a, 26) == 1
+
+    c = ""
+    for i in range(len(m)):
+        if m[i].isalpha():
+            c[i] = chr((a * (ord(m[i]) - 97) + b) % 26 + 97)
+        else: # if m[i] is a space or sthg
+            c[i] = m[i]
+
+    return m
+
+def affine_dec(c, *k):
+    """
+        ci ≡ ami + b (mod 26)  =>
+        mi ≡ a^(-1) * (ci-b) (mod 26)
+
+    :param str c: Ciphertext.
+    :param tuple k: Same as above
+    :return str m:
+    """
+    a = k[0]
+    b = k[1]
+    assert 0 < a < 26
+    assert 0 <= b < 26
+    assert gcd(a, 26) == 1
+
+    m = ""
+    for i in range(len(c)):
+        if c[i].isalpha():
+            m[i] = chr(invert(a) * (ord(c[i]) - 97 - b) % 26 + 97)
+        else: # if m[i] is a space or sthg
+            m[i] = c[i]
+
+    return m
+
+def affine_break_by
+
+# -----------------------  Vigenere cipher
+
+def Vigenere_enc(k,m):
     """
         example: k = "cafe"
                  m = "tellhimaboutme
@@ -110,7 +163,7 @@ def vigenere_enc(k,m):
 
     return c
 
-def vigenere_dec(k,c):
+def Vigenere_dec(k, c):
     """
 
     :param str k: Key
@@ -126,12 +179,20 @@ def vigenere_dec(k,c):
 
     return m
 
-# TODO: Attack on vigenere cipher
+# TODO: Attack on Vigenere cipher
 '''
 Just use this website: https://www.guballa.de/vigenere-solver
 '''
 
-# TODO: Hill cipher
+# -----------------------  Hill cipher
+
+def Hill_enc(k, m):
+    """
+
+    :param k:
+    :param m:
+    :return:
+    """
 
 
 
