@@ -2,7 +2,7 @@
 
 import gmpy2
 
-def isPrime(a):
+def bad_is_prime(a):
     """经典判素方法，对于大整数不实用"""
     if a == 1:
         return False
@@ -14,6 +14,13 @@ def isPrime(a):
             return False
     return True
 
+def is_prime(a,n = 25):    # TODO: 使用Miller-Rabin算法 进行概率判素
+    """
+
+    :param a:   待判定的数
+    :param n:   素性测试次数。 若测试通过n次，则 a不是素数的概率 < 0.25 ** n
+    """
+    return True
 
 def gcd(a, b):
     """欧几里得算法求最大公约数"""
@@ -137,3 +144,8 @@ def gcdext_v1(a, b):
 def gcdext_v2(a, b):
     # 调用欧几里得算法的递归形式
     return gcdext(a, b, 1)
+
+# TODO List:
+#   is_prime(a)
+#   next_prime(a)
+#   last_prime(a)

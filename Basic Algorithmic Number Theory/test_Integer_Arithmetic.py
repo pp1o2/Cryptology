@@ -49,9 +49,9 @@ def test(myFunc, gmpy2Func, N, gmpy2Func_name):
             os.system("pause")
 
 
-def test_isPrime(N):
+def test_bad_is_prime(N):
     gmpy2Func_name = 'gmpy2.is_prime'
-    test(d.isPrime, gmpy2.is_prime, N, gmpy2Func_name)
+    test(d.bad_is_prime, gmpy2.is_prime, N, gmpy2Func_name)
 
 
 def test_gcd(N):
@@ -72,8 +72,11 @@ def test_gcdext_v2(N):
 if __name__ == '__main__':
     N = 100000
 
-    # test_isPrime(N)
-    # print "isPrime() tested."
+    # test_bad_is_prime(N)
+    # print "bad_is_prime() tested."
+
+    # TODO: Test is_prime()
+
     test_gcd(N)
     print "gcd() tested."
     test_gcdext_v1(N)
