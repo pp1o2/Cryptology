@@ -2,6 +2,7 @@
 import os
 
 # -----------------------  shift cipher
+
 def shift_enc(k, m):
     """
         Do shift cipher encryption.
@@ -57,7 +58,7 @@ Got two ways to break the shift cipher :
     1.Brute force , for there are only 26 possible keys 
     
     2.Frequency analysis , for different letters appear in different frequency
-    (Frequency analysis can help us to solve substitution ciphers)
+    (Frequency analysis can help us to solve simple substitution ciphers)
 '''
 
 def shift_break_by_brute_force(c):
@@ -68,14 +69,15 @@ def shift_break_by_brute_force(c):
     :return: no return
     """
 
-    k = 0
+    k = 1
     while True:
-        print "Press ENTER change cancidate plaintexts"
+        print "\nPress ENTER change cancidate plaintexts."
         candidate = shift_dec(k, c)
-        print "\n"
+        print "\nAssume key = %d\n" %k
         print "%s" %candidate
 
         os.system("pause")
+        os.system("cls")
         k = (k + 1) % 26
 
 # TODO: shift_break_by_frequency_analysis(c)
@@ -84,6 +86,53 @@ def shift_break_by_brute_force(c):
 Just use this website for frequency analysis: https://quipqiup.com/ 
 It can solve simple substitution ciphers.
 '''
+
+# TODO: Substitution cipher
+
+def vigenere_enc(k,m):
+    """
+        example: k = "cafe"
+                 m = "tellhimaboutme
+                tell hima bout me
+                cafe cafe cafe ca
+           c =  VEQP JIRE DOZX OE
+
+    :param str k: Key.
+    :param str m: Plaintext.
+    :return str c: Ciphertext.
+    """
+    c = ""
+
+    key_len = len(k)
+    key = [ord(k[i]) - 97 for i in range(key_len)]  # eg: if k = "cafe" then key = [2,0,5,4]
+    for i in range(len(m)):
+        c += chr(ord(m[i]) - 97 + key[i % key_len] % 26 + 97)
+
+    return c
+
+def vigenere_dec(k,c):
+    """
+
+    :param str k: Key
+    :param str c: Ciphertext
+    :return str m: Plaintext
+    """
+    m = ""
+
+    key_len = len(k)
+    key = [ord(k[i]) - 97 for i in range(key_len)]  # eg: if k = "cafe" then key = [2,0,5,4]
+    for i in range(len(c)):
+        m += chr(ord(c[i]) - 97 - key[i % key_len] % 26 + 97)
+
+    return m
+
+# TODO: Attack on vigenere cipher
+'''
+Just use this website: https://www.guballa.de/vigenere-solver
+'''
+
+# TODO: Hill cipher
+
 
 
 
