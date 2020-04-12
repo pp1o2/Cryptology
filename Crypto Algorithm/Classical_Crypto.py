@@ -11,19 +11,22 @@ def shift_enc(k, m):
         Calculate ci: ci ≡ mi+k (mod 26)
 
     :param int k: Key. (0<k<26)
-    :param str m: plaintext. All characters should be alphabetic.
-    :return str c: ciphertext.
+    :param str m: Plaintext.
+    :return str c: Ciphertext.
     """
 
-    assert m.isalpha()
     assert 0 < k < 26
 
     c = ""
+    ci = ""
     for mi in m:
         if mi.islower():
-            c += chr((ord(mi) - 97 + k) % 26 + 97)
-        else:  # if mi is uppercase
-            c += chr((ord(mi) - 65 + k) % 26 + 65)
+            ci = chr((ord(mi) - 97 + k) % 26 + 97)
+        elif mi.isupper():
+            ci = chr((ord(mi) - 65 + k) % 26 + 65)
+        else:
+            ci = mi
+        c += ci
 
     return c
 
@@ -33,20 +36,22 @@ def shift_dec(k,c):
         Calculate mi ≡ ci-k (mod 26)
 
     :param int k: Key. (0<k<26)
-    :param str c: Ciphertext. All characters should be alphabetic.
+    :param str c: Ciphertext.
     :return str m: Plaintext.
     """
 
-    assert c.isalpha()
     assert 0 < k < 26
 
     m = ""
+    mi = ""
     for ci in c:
         if ci.islower():
-            m += chr((ord(ci) - 97 - k) % 26 + 97)
+            mi = chr((ord(ci) - 97 - k) % 26 + 97)
+        elif ci.isupper():
+            mi = chr((ord(ci) - 65 - k) % 26 + 65)
         else:
-            m += chr((ord(ci) - 65 - k) % 26 + 65)
-
+            mi = ci
+        m += mi
     return m
 
 def caeser_enc(m):
@@ -79,7 +84,6 @@ def shift_break_by_brute_force(c):
         print "%s" %candidate
 
         os.system("pause")
-        os.system("cls")
         k = (k + 1) % 26
 
 # TODO: shift_break_by_frequency_analysis(c)
@@ -95,6 +99,7 @@ def affine_enc(m, *k):
     """
         Do affine cipher encryption.
         compute ci ≡ ami + b (mod 26)
+
     :param str m: Plaintext. It consists of lowercase letter and space,comma ....
     :param tuple k: Key.  k = (a,b). Note that a and 26 must be coprime
     :return str c:
@@ -138,7 +143,11 @@ def affine_dec(c, *k):
 
     return m
 
-def affine_break_by
+# TODO: Attack on affine cipher
+'''
+Consider that affine cipher is just a simple substitution cipher
+So, why not use the website: https://quipqiup.com/  
+'''
 
 # -----------------------  Vigenere cipher
 
@@ -184,15 +193,9 @@ def Vigenere_dec(k, c):
 Just use this website: https://www.guballa.de/vigenere-solver
 '''
 
-# -----------------------  Hill cipher
+# -----------------------  TODO: Hill cipher
 
-def Hill_enc(k, m):
-    """
 
-    :param k:
-    :param m:
-    :return:
-    """
 
 
 
